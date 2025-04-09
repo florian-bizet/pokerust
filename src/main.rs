@@ -19,22 +19,26 @@ async fn main() {
     tileset.load_tileset().await;
 
     let mut battle : Battle = Battle::new();
+    battle.load().await;
 
     loop {
-        set_camera(&Camera2D {
-            zoom: vec2(0.01, 0.013),
-            ..Default::default()
-        });
+        
 
-        if !player.is_battling() { //TODO: DONT FORGET TO REMOVE THE !
+        if player.is_battling() { //TODO: DONT FORGET TO REMOVE THE !
+            set_camera(&Camera2D {
+                zoom: vec2(0.008, 0.011),
+                ..Default::default()
+            });
             clear_background(WHITE);
-            //Enemy Poke
-            //Your Poke
-            //Menu
-            set_default_camera();
-            draw_rectangle(0.0, screen_height()-180.0, screen_width(), 180.0, BLACK);
-            draw_rectangle(5.0, screen_height()-175.0, screen_width()-10.0, 170.0, WHITE);
+            battle.update();
+            
+            
         } else {
+            set_camera(&Camera2D {
+                zoom: vec2(0.01, 0.013),
+                ..Default::default()
+            });
+
             clear_background(WHITE);
             
             player.update(&map, &tileset);

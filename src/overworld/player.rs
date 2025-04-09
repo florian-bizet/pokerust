@@ -177,7 +177,7 @@ impl Player {
             TileType::TallGrass => {
                 println!("HAUTES HERBES");
                 let random = rand()%50;
-                random == 0
+                random == 3
             }
             _ => {false}
         }

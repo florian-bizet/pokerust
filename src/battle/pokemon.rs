@@ -29,4 +29,12 @@ impl Pokemon {
             speed: speed
         }
     }
+
+    pub fn get_num(&self) -> i32 {
+        self.num
+    }
+
+    pub fn get_name(&self) -> String {
+        self.name.to_owned()
+    }
 }

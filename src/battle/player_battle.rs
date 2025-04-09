@@ -1,4 +1,4 @@
-use super::Trainer;
+use super::{Pokemon, Trainer};
 
 pub struct PlayerBattle {
     trainer : Trainer
@@ -10,6 +10,10 @@ impl PlayerBattle {
         train.init_debug();
 
         PlayerBattle { trainer: train }
+    }
+
+    pub fn get_active_pokemon(&self) -> &Pokemon {
+        self.trainer.get_active_pokemon()
     }
 }
 
