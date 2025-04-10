@@ -9,6 +9,8 @@ mod battle;
 #[macroquad::main("Pokémon sous frozen")]
 async fn main() {
     set_default_filter_mode(FilterMode::Nearest);
+
+    let mut font = load_ttf_font("PKMN RBYGSC.ttf").await.unwrap();
     
     let mut player : Player = Player::new();
     player.load().await;
@@ -24,13 +26,13 @@ async fn main() {
     loop {
         
 
-        if player.is_battling() { //TODO: DONT FORGET TO REMOVE THE !
+        if !player.is_battling() { //TODO: DONT FORGET TO REMOVE THE !
             set_camera(&Camera2D {
                 zoom: vec2(0.008, 0.011),
                 ..Default::default()
             });
             clear_background(WHITE);
-            battle.update();
+            battle.draw(&font);
             
             
         } else {
@@ -42,23 +44,9 @@ async fn main() {
             clear_background(WHITE);
             
             player.update(&map, &tileset);
+
             //drawing map
-            let mut texture : Texture2D = tileset.get_tile(1).clone();
-            let mut previous_tile : usize = 1;
-            let mut tile : usize;
-            for i in 0..16 {
-                for j in 0..16 {
-                    tile = map.get_tile(i, j);
-                    if tile != 0 {
-                        if tile != previous_tile {
-                            texture = tileset.get_tile(tile).clone();
-                        }
-                        draw_texture(&texture, 16.0*(j as f32)-player.get_x(), 16.0*(i as f32)-player.get_y(), WHITE);
-                    }
-                    previous_tile = tile;
-                }
-            }
-        
+            map.draw(&tileset, &player);
             draw_texture(&player.get_texture(), 0.0, 0.0, WHITE);
             
         }
