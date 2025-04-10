@@ -4,19 +4,17 @@ use super::PlayerBattle;
 use super::Pokemon;
 use super::Trainer;
 
-use super::super::overworld::Animation;
-
 enum BattleState {
     Intro,
     AppearText,
     SendPokemon,
-    SendEnemy,
+    _SendEnemy,
     Idle
 }
 pub struct Battle {
     player : PlayerBattle,
     enemy: Trainer,
-    is_wild: bool,
+    _is_wild: bool,
     player_tex : Option<Texture2D>,
     enemy_tex: Option<Texture2D>,
     state: BattleState,
@@ -30,7 +28,7 @@ impl Battle {
         Battle { 
             player: PlayerBattle::new(), 
             enemy: Trainer::new(), 
-            is_wild: true, 
+            _is_wild: true, 
             player_tex: None , 
             enemy_tex: None, 
             state: BattleState::Intro,
@@ -64,7 +62,7 @@ impl Battle {
         self.enemy.get_active_pokemon()
     }
 
-    pub fn update(&mut self) {
+    pub fn __update(&mut self) {
         //self.draw();
     }
 
@@ -80,7 +78,7 @@ impl Battle {
         
         match self.state {
             BattleState::Intro => {
-                if (self.enemy_pos == 20.0) {
+                if self.enemy_pos == 20.0 {
                     self.state = BattleState::AppearText;
                 } else {
                     draw_texture(&self.enemy_tex.clone().unwrap(), self.enemy_pos, -84.0, BLACK);
@@ -108,6 +106,7 @@ impl Battle {
                 //TODO: pokeball animation
                 if self.buffer > 60 {
                     self.state = BattleState::Idle;
+                    self.buffer = 0;
                 }
                 self.buffer += 1;
             }
@@ -125,6 +124,28 @@ impl Battle {
                 draw_text_ex("RUN", 560.0, 570.0, TextParams { font: Some(font), font_size: 28,  color: BLACK, ..Default::default() });
 
                 //TODO: Menu selection
+                draw_rectangle(530.0, 450.0+(self.menu_selection as f32*30.0), 30.0, 30.0, BLACK);
+                if self.buffer < 10 {
+                    self.buffer += 1;
+                } else {
+                    if is_key_down(KeyCode::Up) {
+                        match self.menu_selection {
+                            0 => {self.menu_selection = 3;}
+                            _ => {self.menu_selection -= 1;}
+                        }
+
+                        self.buffer = 0;
+                    }
+
+                    if is_key_down(KeyCode::Down) {
+                        match self.menu_selection {
+                            3 => {self.menu_selection = 0;}
+                            _ => {self.menu_selection += 1;}
+                        }
+
+                        self.buffer = 0;
+                    }
+                }
             }
 
             _ => {

@@ -10,7 +10,7 @@ mod battle;
 async fn main() {
     set_default_filter_mode(FilterMode::Nearest);
 
-    let mut font = load_ttf_font("PKMN RBYGSC.ttf").await.unwrap();
+    let font = load_ttf_font("PKMN RBYGSC.ttf").await.unwrap();
     
     let mut player : Player = Player::new();
     player.load().await;
@@ -26,7 +26,7 @@ async fn main() {
     loop {
         
 
-        if !player.is_battling() { //TODO: DONT FORGET TO REMOVE THE !
+        if player.is_battling() { //TODO: DONT FORGET TO REMOVE THE !
             set_camera(&Camera2D {
                 zoom: vec2(0.008, 0.011),
                 ..Default::default()

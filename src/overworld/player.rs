@@ -36,7 +36,7 @@ impl OverworldEntity for Player {
         (self.y / 16.0) as i32
     }
 
-    fn get_orientation(&self) -> i32 {
+    fn _get_orientation(&self) -> i32 {
         self.orientation
     }
 
@@ -150,7 +150,7 @@ impl Player {
         self.y = 16.0 * (y as f32);
     }
 
-    pub fn set_orientation(&mut self, ori : i32) {
+    pub fn _set_orientation(&mut self, ori : i32) {
         self.orientation = ori;
         self.current_anim = ori;
     }
