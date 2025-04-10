@@ -91,6 +91,7 @@ impl Battle {
                 set_default_camera();
                 //TODO: adapt pokemon name
                 draw_text_ex("A wild RHYDON appears !", 25.0, 480.0, TextParams { font: Some(font), font_size: 28,  color: BLACK, ..Default::default() });
+                draw_rectangle(748.0, 550.0, 32.0, 32.0, BLACK);
                 if is_key_down(KeyCode::Enter) {
                     self.buffer = 0;
                     self.state = BattleState::SendPokemon;

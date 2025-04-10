@@ -6,7 +6,7 @@ mod overworld;
 
 mod battle;
 
-#[macroquad::main("Pokémon sous frozen")]
+#[macroquad::main("Pokémon")]
 async fn main() {
     set_default_filter_mode(FilterMode::Nearest);
 
